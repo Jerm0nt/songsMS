@@ -10,11 +10,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class SongListService implements ISongListService {
-  @Autowired
-  IUserService userService;
   @Autowired
   ISongsService songsService;
   @Autowired
@@ -33,7 +32,6 @@ public class SongListService implements ISongListService {
     }
 
   }
-
 
   @Override
   public int postSongList(SongList songList, String token) throws NotFoundException {

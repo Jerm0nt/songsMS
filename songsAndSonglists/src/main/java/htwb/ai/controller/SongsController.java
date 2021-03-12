@@ -5,7 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import htwb.ai.model.Songs;
 import htwb.ai.services.ISongsService;
-import htwb.ai.services.IUserService;
+import htwb.ai.services.IUserInterface;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -17,14 +17,15 @@ import java.security.InvalidParameterException;
 import java.util.ArrayList;
 
 @RestController
-@RequestMapping(value="/songs")
+@RequestMapping
 public class SongsController {
 
   @Autowired
   private ISongsService songsService;
 
   @Autowired
-  private IUserService userService;
+  private IUserInterface userService;
+
 
     @GetMapping(value="/{id}", produces = {"application/json", "application/xml"})
     public ResponseEntity<Songs> getSong(@PathVariable(value="id") Integer id,
@@ -121,7 +122,7 @@ public class SongsController {
       }
     }
 
-  public void setServices(ISongsService mockSongsServie, IUserService mockUserService) {
+  public void setServices(ISongsService mockSongsServie, IUserInterface mockUserService) {
       this.userService = mockUserService;
       this.songsService = mockSongsServie;
   }

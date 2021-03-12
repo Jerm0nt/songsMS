@@ -4,7 +4,7 @@ package htwb.ai.controller;
 import htwb.ai.model.SongList;
 import htwb.ai.model.User;
 import htwb.ai.services.ISongListService;
-import htwb.ai.services.IUserService;
+import htwb.ai.services.IUserInterface;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -16,18 +16,18 @@ import java.util.Set;
 
 
 @RestController
-@RequestMapping(value="/songLists")
+@RequestMapping(value="/playlist")
 public class SongListController {
   @Autowired
   ISongListService songListService;
 
   @Autowired
-  IUserService userService;
+  IUserInterface userInterface;
 
   @GetMapping(value="/{id}", produces = {"application/json", "application/xml"})
   public ResponseEntity getSongListById(@PathVariable(value="id") Integer id,
                                         @RequestHeader(name = "Authorization", required = false) String token) {
-    if(!userService.isTokenValid(token) || token==null){
+    if(!userInterface.isTokenValid(token) || token==null){
       return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
     SongList songList;
@@ -40,7 +40,7 @@ public class SongListController {
       //wenn SongList privat, muss token zu SongList-Owner gehören
       User u = songList.getUser();
       if(songList.isPrivate() &&
-        !songList.getUser().getUserId().equals(userService.getUserByToken(token).getUserId())){
+        !songList.getUser().getUserId().equals(userInterface.getUserByToken(token).getUserId())){
         return new ResponseEntity(HttpStatus.FORBIDDEN);
       }
     }catch(Exception e){
@@ -51,7 +51,7 @@ public class SongListController {
   @PostMapping(consumes = "application/json")
   public ResponseEntity<SongList> postSongList(@RequestBody SongList songList,
                                      @RequestHeader(name="Authorization", required = false) String token){
-    if(!userService.isTokenValid(token)|| token==null){
+    if(!userInterface.isTokenValid(token)|| token==null){
       return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
     try{
@@ -67,11 +67,11 @@ public class SongListController {
   @GetMapping(produces = {"application/json", "application/xml"})
   public ResponseEntity getSongListByUser(@RequestParam(value="userId") String userId,
                            @RequestHeader(name = "Authorization", required = false) String token) {
-    if(!userService.isTokenValid(token)|| token==null){
+    if(!userInterface.isTokenValid(token)|| token==null){
       return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
     try{
-      Set<SongList> songListSet = userService.getSongListSet(userId, token);
+      Set<SongList> songListSet = userInterface.getSongListSet(userId, token);
       return new ResponseEntity(songListSet, HttpStatus.OK);
     }catch(Exception e){
       return new ResponseEntity(HttpStatus.NOT_FOUND);
@@ -80,7 +80,7 @@ public class SongListController {
   @DeleteMapping(value="/{id}")
   public ResponseEntity deleteSongList(@PathVariable(value="id") Integer id,
                                        @RequestHeader(name = "Authorization", required = false) String token) {
-    if (!userService.isTokenValid(token) || token == null) {
+    if (!userInterface.isTokenValid(token) || token == null) {
       return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
     try {
