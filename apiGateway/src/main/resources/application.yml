@@ -1,0 +1,16 @@
+server:
+  port: 8080
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: auth
+          uri: http://localhost:9002/
+          predicates:
+            - Path=/auth/**
+
+        - id: songs
+          uri: http://localhost:9001/
+          predicates:
+            - Path=/songs/**
