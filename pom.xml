@@ -12,7 +12,7 @@
   <modules>
     <module>auth</module>
     <module>songsAndSonglists</module>
-    <module>newService</module>
+    <module>groups</module>
     <module>registry</module>
     <module>apiGateway</module>
   </modules>

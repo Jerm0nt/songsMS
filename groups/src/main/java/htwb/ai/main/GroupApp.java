@@ -2,9 +2,9 @@ package htwb.ai.main;
 
 import org.springframework.boot.SpringApplication;
 
-public class NewServiceApp {
+public class GroupApp {
 
   public static void main(String[] args){
-    SpringApplication.run(NewServiceApp.class, args);
+    SpringApplication.run(GroupApp.class, args);
   }
 }
