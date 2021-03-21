@@ -1,26 +1,31 @@
 package htwb.ai.main.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import org.springframework.data.annotation.CreatedDate;
+
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 
 @Entity
-@Table
+@Table(name="song_group")
 public class Group {
 
   @Id
   private String groupId;
 
+  private String owner;
+
   private String description;
 
-  @OneToMany
+  @ElementCollection
   private ArrayList<String> memberList;
 
+  @Enumerated(EnumType.STRING)
   private Genre genre;
 
+  @CreatedDate
+  @Column(name = "founding_date", nullable = false, updatable = false)
+  //@Temporal(TemporalType.TIMESTAMP)
   private Date foundingDate;
 
   @Id
@@ -30,6 +35,14 @@ public class Group {
 
   public void setGroupId(String groupId) {
     this.groupId = groupId;
+  }
+
+  public String getOwner() {
+    return owner;
+  }
+
+  public void setOwner(String owner) {
+    this.owner = owner;
   }
 
   public String getDescription() {

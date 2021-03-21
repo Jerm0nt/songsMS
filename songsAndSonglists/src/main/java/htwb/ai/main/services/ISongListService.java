@@ -14,5 +14,5 @@ public interface ISongListService {
 
     Set<SongList> getSongListSetByUser(String userId, boolean privateAudience) throws NotFoundException;
 
-  void updateSongList(SongList songList) throws NotFoundException;
+    void updateSongList(SongList songList) throws NotFoundException;
 }

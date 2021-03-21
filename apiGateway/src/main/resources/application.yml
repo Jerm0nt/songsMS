@@ -14,3 +14,8 @@ spring:
           uri: http://localhost:9001/
           predicates:
             - Path=/songs/**
+
+        - id: songs
+          uri: http://localhost:9003/
+          predicates:
+            - Path=/group/**
