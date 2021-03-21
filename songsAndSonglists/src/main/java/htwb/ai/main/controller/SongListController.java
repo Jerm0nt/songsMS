@@ -4,6 +4,7 @@ package htwb.ai.main.controller;
 import htwb.ai.main.services.AuthRestWrapper;
 import htwb.ai.main.services.ISongListService;
 import htwb.ai.main.model.SongList;
+import htwb.ai.main.services.ISongsService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -121,5 +122,9 @@ public class SongListController {
     } catch (NotFoundException e) {
       return new ResponseEntity(HttpStatus.NOT_FOUND);
     }
+  }
+  public void setServices(ISongListService mockSongListService, AuthRestWrapper mockAuthRestWrapper) {
+    this.authRestWrapper = mockAuthRestWrapper;
+    this.songListService = mockSongListService;
   }
 }

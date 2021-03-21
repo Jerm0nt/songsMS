@@ -8,25 +8,19 @@ import org.springframework.web.client.RestTemplate;
 public class AuthRestWrapper {
   private RestTemplate restTemplate;
 
-  private final String PATH = "http://localhost:8080/auth/";
-
   public AuthRestWrapper() { restTemplate = new RestTemplate();}
 
   public Boolean isTokenValid(String token) {
-    if(restTemplate.getForObject(PATH + "valid/"+token, Integer.class)==1){
-      return true;
-    }else{ return false; }
+    return restTemplate.getForObject("http://localhost:9002/auth/valid/"+token, Boolean.class);
   }
 
   public Boolean doTokenAndIdMatch(String token, String userId){
-    if(restTemplate.getForObject(PATH + "match?token="+token+"&userId="+userId, Integer.class)==1) {
-      return true;
-    }else{ return false; }
+    return restTemplate.getForObject("http://localhost:9002/auth/match?token="+token+"&userId="+userId, Boolean.class);
   }
 
 
   public String getUserIdByToken(String token) throws NotFoundException {
-    String userID = restTemplate.getForObject(PATH + "getId/"+token, String.class);
+    String userID = restTemplate.getForObject("http://localhost:9002/auth/getId/"+token, String.class);
     if(userID.equals("User not found!")){
       throw new NotFoundException("kein solcher User!");
     }
@@ -34,9 +28,6 @@ public class AuthRestWrapper {
   }
 
   public boolean isUserValid(String userId) {
-    if(restTemplate.getForObject(PATH + "validUser/"+userId, Integer.class)==1){
-      return true;
-    }
-    else { return false; }
+    return restTemplate.getForObject("http://localhost:9002/auth/validUser/"+userId, Boolean.class);
   }
 }

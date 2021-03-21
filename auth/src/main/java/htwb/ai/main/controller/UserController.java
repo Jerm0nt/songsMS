@@ -45,40 +45,40 @@ public class UserController {
   }
 
   @GetMapping(value="/valid/{token}")
-  public ResponseEntity<Boolean> isTokenValid(@PathVariable(value="token") String token){
+  public boolean isTokenValid(@PathVariable(value="token") String token){
     try {
       userService.getUserByToken(token);
-      return ResponseEntity.ok(true);
+      return true;
     } catch (NotFoundException e) {
       e.printStackTrace();
-      return ResponseEntity.ok(false);
+      return false;
     }
   }
 
   @GetMapping(value="/match")
-  public ResponseEntity<Boolean> doTokenAndIdMatch(@RequestParam(value="userId") String userId,
-                                  @RequestParam(value="token") String token){
+  public boolean doTokenAndIdMatch(@RequestParam(value="userId") String userId,
+                                   @RequestParam(value="token") String token){
     try {
       userService.getUserByUserId(userId);
       if(userService.getUserByToken(token).getUserId().equals(userId)){
-        return ResponseEntity.ok(true);
+        return true;
       }else{
-        return ResponseEntity.ok(false);
+        return false;
       }
     } catch (NotFoundException e) {
       e.printStackTrace();
-      return ResponseEntity.ok(false);
+      return false;
     }
   }
 
   @GetMapping(value="/validUser/{userId}")
-  public ResponseEntity<Boolean> isUserValid(@PathVariable(value="userId") String userId){
+  public boolean isUserValid(@PathVariable(value="userId") String userId){
     try {
       userService.getUserByUserId(userId);
-      return ResponseEntity.ok(true);
+      return true;
     } catch (NotFoundException e) {
       e.printStackTrace();
-      return ResponseEntity.ok(false);
+      return false;
     }
   }
 
