@@ -1,6 +1,7 @@
 package htwb.ai.main.services;
 
 import htwb.ai.main.model.SongList;
+import htwb.ai.main.model.Songs;
 import javassist.NotFoundException;
 
 import java.util.Set;
@@ -15,4 +16,6 @@ public interface ISongListService {
     Set<SongList> getSongListSetByUser(String userId, boolean privateAudience) throws NotFoundException;
 
     void updateSongList(SongList songList) throws NotFoundException;
+
+    void deleteSongFromSongLists(Songs songs);
 }

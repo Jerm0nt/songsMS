@@ -18,7 +18,7 @@ public class SongsService implements ISongsService {
   private SongsRepository repository;
 
   @Autowired
-  private SongListService songListService;
+  private ISongListService songListService;
 
   @Override
   public ArrayList<Songs> findAll() throws NotFoundException {
@@ -86,5 +86,9 @@ public class SongsService implements ISongsService {
       }
     }
     return true;
+  }
+
+  public void setRepository(SongsRepository mockSongsRepository){
+    this.repository = mockSongsRepository;
   }
 }
