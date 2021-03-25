@@ -23,6 +23,7 @@ public class SongsService implements ISongsService {
   @Override
   public ArrayList<Songs> findAll() throws NotFoundException {
 
+
     try{return (ArrayList<Songs>) repository.findAll();}
     catch(Exception e){throw new NotFoundException("Keine songs");}
   }
@@ -38,7 +39,7 @@ public class SongsService implements ISongsService {
       repository.save(song);
       return song.getId();
     }catch (Exception e){
-      throw new Exception("only title is allowed null");
+      throw new Exception("Title on null is not allowed!");
     }
 
   }
@@ -88,7 +89,8 @@ public class SongsService implements ISongsService {
     return true;
   }
 
-  public void setRepository(SongsRepository mockSongsRepository){
+  public void setRepository(SongsRepository mockSongsRepository, SongListService mockSongListService){
     this.repository = mockSongsRepository;
+    this.songListService = mockSongListService;
   }
 }
