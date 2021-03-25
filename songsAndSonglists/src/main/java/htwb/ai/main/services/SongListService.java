@@ -19,20 +19,6 @@ public class SongListService implements ISongListService {
   @Autowired
   SongListRepository repository;
 
-  public void deleteSongFromSongLists(Songs songs) {
-    ArrayList<SongList> songLists = (ArrayList<SongList>) repository.findAll();
-    for (SongList s : songLists){
-      for(int i = 0; i<s.getSongList().size(); i++){
-        Songs so = s.getSongList().get(i);
-        if(songs.getId()==so.getId()){
-          s.getSongList().remove(i);
-        }
-      }
-      repository.save(s);
-    }
-
-  }
-
   @Override
   public int postSongList(SongList songList, String userId) throws NotFoundException {
     List<Songs> songs = songList.getSongList();
@@ -82,16 +68,36 @@ public class SongListService implements ISongListService {
 
   @Override
   public void updateSongList(SongList songList) throws NotFoundException {
-    try{
+
       List<Songs> songs = songList.getSongList();
       if(songsService.areSongsValid(songs)){
-        repository.findById(songList.getId());
-        repository.save(songList);
+        try{
+          repository.findById(songList.getId());
+          repository.save(songList);
+        }catch(Exception e){
+          throw new NotFoundException("Songliste nicht gefunden!");
+        }
       }else{
         throw new NotFoundException("Diese Songs sind teilweise nicht in der DB!");
       }
-    }catch(Exception e){
-      throw new NotFoundException("Songliste nicht gefunden!");
+
+  }
+  public void deleteSongFromSongLists(Songs songs) {
+    ArrayList<SongList> songLists = (ArrayList<SongList>) repository.findAll();
+    for (SongList s : songLists){
+      for(int i = 0; i<s.getSongList().size(); i++){
+        Songs so = s.getSongList().get(i);
+        if(songs.getId()==so.getId()){
+          s.getSongList().remove(i);
+        }
+      }
+      repository.save(s);
     }
+
+  }
+
+  public void setRepositoryAndService(SongListRepository mockSongListRepository, SongsService mockSongsService) {
+    this.repository = mockSongListRepository;
+    this.songsService = mockSongsService;
   }
 }
