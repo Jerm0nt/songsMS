@@ -2,6 +2,7 @@ package htwb.ai.main.controller;
 
 import htwb.ai.main.model.Group;
 import htwb.ai.main.services.AuthRestWrapper;
+import htwb.ai.main.services.GroupService;
 import htwb.ai.main.services.IGroupService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,9 +51,7 @@ public class GroupController {
     try{
       String userId = authRestWrapper.getUserIdByToken(token);
       groupService.postGroup(group, userId);
-      HttpHeaders headers = new HttpHeaders();
-      headers.set("Location", "http://localhost:8080/group?groupId="+group.getGroupId());
-      return new ResponseEntity<>(group, headers, HttpStatus.CREATED);
+      return new ResponseEntity<>(group, HttpStatus.CREATED);
     }catch(Exception e){
       e.printStackTrace();
       return new ResponseEntity(HttpStatus.BAD_REQUEST);
@@ -93,5 +92,10 @@ public class GroupController {
       return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
     return new ResponseEntity(HttpStatus.NO_CONTENT);
+  }
+
+  public void setServices(GroupService mockGroupService, AuthRestWrapper mockAuthRestWrapper){
+    this.authRestWrapper = mockAuthRestWrapper;
+    this.groupService = mockGroupService;
   }
 }
