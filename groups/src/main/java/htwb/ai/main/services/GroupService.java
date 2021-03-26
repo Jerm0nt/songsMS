@@ -101,4 +101,8 @@ public class GroupService implements IGroupService {
     }
     return userGroups;
   }
+
+  public void setRepository(GroupRepository mockGroupRepository){
+    this.repository = mockGroupRepository;
+  }
 }
