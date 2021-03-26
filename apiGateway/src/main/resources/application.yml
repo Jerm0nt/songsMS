@@ -15,7 +15,8 @@ spring:
           predicates:
             - Path=/songs/**
 
-        - id: songs
+        - id: group
           uri: http://localhost:9003/
           predicates:
             - Path=/group/**
+            - Path=/news/**

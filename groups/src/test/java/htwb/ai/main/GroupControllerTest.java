@@ -1,2 +1,4 @@
-package htwb.ai.main;public class GroupControllerTest {
+package htwb.ai.main;
+
+public class GroupControllerTest {
 }

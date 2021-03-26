@@ -6,6 +6,7 @@ import htwb.ai.main.services.ISongListService;
 import htwb.ai.main.model.SongList;
 import htwb.ai.main.services.ISongsService;
 import javassist.NotFoundException;
+import org.aspectj.weaver.ast.Not;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -126,5 +127,21 @@ public class SongListController {
   public void setServices(ISongListService mockSongListService, AuthRestWrapper mockAuthRestWrapper) {
     this.authRestWrapper = mockAuthRestWrapper;
     this.songListService = mockSongListService;
+  }
+  /*@GetMapping(value="/owner/{songlistid}")
+  public String isUserOwner(@PathVariable(value="songListId") int songListId){
+    try{
+      return songListService.getSongList(songListId).getUserId();
+    }catch (NotFoundException e){
+      return "No such user";
+    }
+  }*/
+  @GetMapping(value="/owner/{songlistId}")
+  public String getOwner(@PathVariable(value="songlistId") int songlistId) throws NotFoundException {
+    return songListService.getSongList(songlistId).getUserId();
+  }
+  @GetMapping(value="/isprivate/{songlistId}")
+  public boolean isSongListPrivate(@PathVariable(value="songlistId") int songlistId) throws NotFoundException {
+    return songListService.getSongList(songlistId).isPrivate();
   }
 }

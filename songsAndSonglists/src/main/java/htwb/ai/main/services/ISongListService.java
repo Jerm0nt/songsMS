@@ -9,7 +9,7 @@ import java.util.Set;
 public interface ISongListService {
     int postSongList(SongList songList, String token) throws NotFoundException;
 
-    SongList getSongList(Integer id) throws NotFoundException;
+    SongList getSongList(int id) throws NotFoundException;
 
     void deleteSongList(Integer id) throws NotFoundException;
 

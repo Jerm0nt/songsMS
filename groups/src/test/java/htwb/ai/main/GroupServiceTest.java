@@ -1,2 +1,4 @@
-package htwb.ai.main;public class GroupServiceTest {
+package htwb.ai.main;
+
+public class GroupServiceTest {
 }

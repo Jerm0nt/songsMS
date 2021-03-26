@@ -93,4 +93,8 @@ public class UserService implements IUserService {
     userByToken.setSongLists(new HashSet(songLists));
     repository.save(userByToken);
   }*/
+
+  public void setRepository(UserRepository mockUserRepository){
+    this.repository = mockUserRepository;
+  }
 }

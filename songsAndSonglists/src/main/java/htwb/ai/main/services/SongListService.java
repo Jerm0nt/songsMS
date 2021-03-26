@@ -32,7 +32,7 @@ public class SongListService implements ISongListService {
   }
 
   @Override
-  public SongList getSongList(Integer id) throws NotFoundException {
+  public SongList getSongList(int id) throws NotFoundException {
     try{
       SongList songList = repository.findById(id).get();
       return songList;

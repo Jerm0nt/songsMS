@@ -80,4 +80,25 @@ public class GroupService implements IGroupService {
 
 
   }
+
+  @Override
+  public boolean isUserMember(String userId, String groupId){
+    try{
+      return getGroupById(groupId).getMemberList().contains(userId);
+    }catch (NotFoundException e){
+      return false;
+    }
+  }
+
+  @Override
+  public ArrayList<Group> getAllGroups(String userId) {
+    ArrayList<Group> allGroups = (ArrayList<Group>) repository.findAll();
+    ArrayList<Group> userGroups = new ArrayList<>();
+    for(Group g : allGroups){
+      if(g.getMemberList().contains(userId)){
+        userGroups.add(g);
+      }
+    }
+    return userGroups;
+  }
 }

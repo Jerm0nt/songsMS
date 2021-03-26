@@ -15,4 +15,8 @@ public interface IGroupService {
   void addMember(String groupId, String userId);
 
   void leaveGroup(String groupId, String userIdByToken) throws NotFoundException;
+
+  boolean isUserMember(String userId, String groupId) throws NotFoundException;
+
+  ArrayList<Group> getAllGroups(String userId);
 }

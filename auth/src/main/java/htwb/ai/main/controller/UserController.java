@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import htwb.ai.main.model.User;
 import htwb.ai.main.services.IUserService;
+import htwb.ai.main.services.UserService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -89,5 +90,9 @@ public class UserController {
     }catch (NotFoundException e){
       return "User not found!";
     }
+  }
+
+  public void setUserService (UserService mockUserService){
+    this.userService = mockUserService;
   }
 }
