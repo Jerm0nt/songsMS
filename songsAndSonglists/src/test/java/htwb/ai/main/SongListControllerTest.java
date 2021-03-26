@@ -186,4 +186,30 @@ public class SongListControllerTest {
   @Test public void deleteSongListTest4FalseToken() {
     assertTrue(songListController.deleteSongList(testIdExistent,tokenInvalid).getStatusCode().equals(HttpStatus.UNAUTHORIZED));
   }
+  //getOwner
+  @Test public void getOwnerTest1Good() throws NotFoundException {
+    assertTrue(songListController.getOwner(testIdExistent).equals(authorizedUserId));
+  }
+  @Test public void getOwnerTest2NotFound(){
+    try{
+      songListController.getOwner(testIdNichtExistent);
+    }catch(NotFoundException e){
+      System.out.println("Not Found Exception geworfen! Test erfolgreich!");
+    }
+  }
+  //isSongListPrivate
+  @Test public void isSongListPrivateTest1True() throws NotFoundException {
+    assertTrue(songListController.isSongListPrivate(1));
+  }
+  @Test public void isSongListPrivateTest2False() throws NotFoundException {
+    testSongList.setPrivate(false);
+    assertTrue(!songListController.isSongListPrivate(1));
+  }
+  @Test public void isSongListPrivateTest2NotFound(){
+    try{
+      songListController.isSongListPrivate(testIdNichtExistent);
+    }catch(NotFoundException e){
+      System.out.println("Not Found Exception geworfen! Test erfolgreich!");
+    }
+  }
 }
