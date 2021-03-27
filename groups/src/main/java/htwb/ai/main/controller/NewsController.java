@@ -2,16 +2,14 @@ package htwb.ai.main.controller;
 
 import htwb.ai.main.model.Group;
 import htwb.ai.main.model.News;
-import htwb.ai.main.services.AuthRestWrapper;
-import htwb.ai.main.services.IGroupService;
-import htwb.ai.main.services.INewsService;
-import htwb.ai.main.services.SongListRestWrapper;
+import htwb.ai.main.services.*;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.ArrayList;
 
@@ -53,7 +51,7 @@ public class NewsController {
       }
       int newsId = newsService.postNews(userId, news);
       HttpHeaders headers = new HttpHeaders();
-      headers.set("Location", "http://localhost:8080/songs/playist/"+String.valueOf(newsId));
+      headers.set("Location", "http://localhost:8080/songs/playist/"+String.valueOf(news.getSongListId()));
       return new ResponseEntity(headers,HttpStatus.OK);
     }catch(NotFoundException e){
       return new ResponseEntity(HttpStatus.NOT_FOUND);
@@ -94,6 +92,13 @@ public class NewsController {
     } catch (NotFoundException e) {
       return new ResponseEntity(HttpStatus.NOT_FOUND);
     }
+  }
+  public void setServices(NewsService mockNewsService, GroupService mockGroupService,
+                          AuthRestWrapper mockAuthRestWrapper, SongListRestWrapper mockSongListRestWrapper){
+    this.groupService = mockGroupService;
+    this.newsService = mockNewsService;
+    this.songListWrapper = mockSongListRestWrapper;
+    this.authRestWrapper = mockAuthRestWrapper;
   }
 
 }
