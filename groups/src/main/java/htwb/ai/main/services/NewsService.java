@@ -47,4 +47,8 @@ public class NewsService implements INewsService{
     }
     return groupNews;
   }
+
+  public void setRepository(NewsRepository mockNewsRepository){
+    this.repository = mockNewsRepository;
+  }
 }
